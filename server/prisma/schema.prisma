@@ -11,6 +11,7 @@ model User {
   id        Int      @id @default(autoincrement())
   email     String   @unique
   password  String
+  nickName  String?
   profile  UserProfile?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -23,7 +24,6 @@ model UserProfile{
   userId    Int     @unique
   firstName String
   lastName  String
-  nickName  String?
   country  String?
   city  String?
   dob DateTime?
