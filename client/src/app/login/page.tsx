@@ -5,10 +5,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import { useState } from 'react';
+import { login } from '@/services/LoginService';
 
 const Login = () => {
   const [userData, setUserData] = useState({
-    username: '',
+    email: '',
     password: '',
   });
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -17,8 +18,10 @@ const Login = () => {
       [e.target.name]: e.target.value,
     });
   }
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async(e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    const response = await login(userData.email, userData.password);
+    console.log(response);
   }
   return (
     <div className="flex items-center justify-center h-screen bg-gray-800 text-white">
@@ -28,9 +31,10 @@ const Login = () => {
           <div className="relative">
             <FontAwesomeIcon icon={faUser} className="absolute top-1/2 left-3 transform -translate-y-1/2 text-gray-500" />
             <input
-              type="text"
-              placeholder="Username"
+              type="email"
+              placeholder="Email"
               className="pl-10 pr-4 py-2 border rounded w-full focus:outline-none focus:border-blue-500 text-black"
+              name='email'
               onChange={e=>handleChange(e)}
             />
           </div>
@@ -40,12 +44,14 @@ const Login = () => {
               type="password"
               placeholder="Password"
               className="pl-10 pr-4 py-2 border rounded w-full focus:outline-none focus:border-blue-500 text-black"
+              name='password'
               onChange={e=>handleChange(e)}
             />
           </div>
           <button
             type="submit"
             className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300"
+            onClick={e=>handleSubmit(e)}
           >
             Login
           </button>
